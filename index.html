@@ -1,8 +1,20 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="
+        width=device-width,
+        initial-scale=1,
+        maximum-scale=1,
+        viewport-fit=cover
+    "
+>
 
 <title>Divisor de Gastos</title>
 
@@ -27,7 +39,10 @@ h1,h2,h3{
     margin-bottom:20px;
 }
 
-input, select{
+input,
+select,
+button{
+
     width:100%;
     padding:12px;
     margin-top:10px;
@@ -36,18 +51,12 @@ input, select{
     box-sizing:border-box;
     background:#3a3a3a;
     color:white;
+
     font-size:16px;
 }
 
 button{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
     background:#4caf50;
-    color:white;
-    font-size:16px;
     cursor:pointer;
 }
 
@@ -103,6 +112,7 @@ small{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -113,7 +123,11 @@ small{
 
     <h2>Agregar persona</h2>
 
-    <input type="text" id="personaInput" placeholder="Nombre">
+    <input
+        type="text"
+        id="personaInput"
+        placeholder="Nombre"
+    >
 
     <button onclick="agregarPersona()">
         Agregar
@@ -133,13 +147,17 @@ small{
 
     <h2>Nuevo gasto</h2>
 
-    <input type="text" id="descInput" placeholder="Descripción">
+    <input
+        type="text"
+        id="descInput"
+        placeholder="Descripción"
+    >
 
     <input
-    type="number"
-    id="montoInput"
-    placeholder="Monto"
-    step="0.01"
+        type="number"
+        id="montoInput"
+        placeholder="Monto"
+        step="0.01"
     >
 
     <select id="pagadorSelect"></select>
@@ -162,10 +180,10 @@ small{
     <select id="personaPagoSelect"></select>
 
     <input
-    type="number"
-    id="montoPagoInput"
-    placeholder="Monto pagado"
-    step="0.01"
+        type="number"
+        id="montoPagoInput"
+        placeholder="Monto pagado"
+        step="0.01"
     >
 
     <button onclick="registrarPago()">
@@ -187,7 +205,9 @@ small{
     <button
         class="reset-btn"
         onclick="resetearTodo()">
+
         Resetear todo
+
     </button>
 
 </div>
@@ -253,9 +273,13 @@ function agregarPersona(){
     if(!nombre) return;
 
     personas.push({
+
         id:Date.now(),
+
         nombre:nombre,
+
         fijo:false
+
     });
 
     document.getElementById(
@@ -272,7 +296,9 @@ function eliminarPersona(id){
     personas.find(p => p.id === id);
 
     if(persona.fijo){
+
         alert("No se puede eliminar.");
+
         return;
     }
 
@@ -349,8 +375,11 @@ function crearGasto(){
         if(id !== pagadorId){
 
             participantes.push({
+
                 id:id,
+
                 deuda:division
+
             });
 
             deudas.push({
@@ -408,7 +437,10 @@ function registrarPago(){
         ).value
     );
 
-    if(isNaN(monto) || monto <= 0){
+    if(
+        isNaN(monto) ||
+        monto <= 0
+    ){
         return;
     }
 
@@ -433,6 +465,7 @@ function registrarPago(){
 function calcularBalance(personaId){
 
     let deuda = 0;
+
     let pagosRealizados = 0;
 
     deudas.forEach(d => {
@@ -461,7 +494,9 @@ function calcularBalance(personaId){
 function eliminarGasto(id){
 
     gastos =
-    gastos.filter(g => g.id !== id);
+    gastos.filter(
+        g => g.id !== id
+    );
 
     guardar();
     render();
@@ -486,8 +521,8 @@ function renderBalances(){
 
         if(balance > 0){
 
-            clase = "saldo-negativo";
-
+            clase =
+            "saldo-negativo";
         }
 
         let texto = "";
@@ -506,8 +541,8 @@ function renderBalances(){
         }
         else{
 
-            texto = "Saldado";
-
+            texto =
+            "Saldado";
         }
 
         container.innerHTML += `
@@ -533,7 +568,9 @@ function renderBalances(){
                     <button
                         class="small-btn"
                         onclick="eliminarPersona(${p.id})">
+
                         X
+
                     </button>
                     `
                     :
@@ -559,20 +596,25 @@ function renderSelects(){
     );
 
     pagador.innerHTML = "";
+
     pago.innerHTML = "";
 
     personas.forEach(p => {
 
         pagador.innerHTML += `
+
             <option value="${p.id}">
                 ${p.nombre}
             </option>
+
         `;
 
         pago.innerHTML += `
+
             <option value="${p.id}">
                 ${p.nombre}
             </option>
+
         `;
     });
 
@@ -699,7 +741,9 @@ function resetearTodo(){
 function render(){
 
     renderBalances();
+
     renderSelects();
+
     renderGastos();
 }
 
@@ -709,4 +753,4 @@ render();
 
 </body>
 </html>
-
+```
