@@ -276,6 +276,21 @@ function guardar(){
     );
 }
 
+function aCentavos(valor){
+
+    return Math.round(
+        parseFloat(
+            valor.toString().replace(",", ".")
+        ) * 100
+    );
+
+}
+
+function aPesos(centavos){
+
+    return (centavos / 100).toFixed(2);
+
+}
 function agregarPersona(){
 
     const nombre =
@@ -348,13 +363,12 @@ function crearGasto(){
         "descInput"
     ).value.trim();
 
-    const montoTexto =
+    const monto =
+    aCentavos(
     document.getElementById(
         "montoInput"
-    ).value.replace(",", ".");
-
-    const monto =
-    parseFloat(montoTexto);
+    ).value
+    );
 
     const pagadorId =
     parseInt(
@@ -377,7 +391,9 @@ function crearGasto(){
     }
 
     const division =
-    monto / checks.length;
+    Math.round(
+        monto / checks.length
+    );
 
     const participantes = [];
 
@@ -444,13 +460,12 @@ function registrarPago(){
         ).value
     );
 
-    const montoTexto =
-    document.getElementById(
-        "montoPagoInput"
-    ).value.replace(",", ".");
-
     const monto =
-    parseFloat(montoTexto);
+    aCentavos(
+        document.getElementById(
+            "montoPagoInput"
+        ).value
+    );
 
     if(
         isNaN(monto) ||
@@ -503,8 +518,17 @@ function calcularBalance(personaId){
 
     });
 
-    return deuda - pagosRealizados;
-}
+    let balance =
+    deuda - pagosRealizados;
+
+    if(
+        Math.abs(balance) < 1
+    ){
+        return 0;
+    }
+
+    return balance;
+    }
 
 function eliminarGasto(id){
 
@@ -545,13 +569,13 @@ function renderBalances(){
         if(balance > 0){
 
             texto =
-            `Debe $${balance.toFixed(2)}`;
+            `Debe $${aPesos(balance)}`;
 
         }
         else if(balance < 0){
 
             texto =
-            `A favor $${Math.abs(balance).toFixed(2)}`;
+            `A favor $${aPesos(Math.abs(balance))}`;
 
         }
         else{
@@ -692,7 +716,7 @@ function renderGastos(){
 
                 <div>
                     Total:
-                    <b>$${g.total.toFixed(2)}</b>
+                    <b>$${aPesos(g.total)}</b>
                 </div>
 
                 <br>
@@ -712,7 +736,7 @@ function renderGastos(){
 
                     ${persona?.nombre}
                     →
-                    $${p.deuda.toFixed(2)}
+                    $${aPesos(p.deuda)}
 
                 </div>
 
